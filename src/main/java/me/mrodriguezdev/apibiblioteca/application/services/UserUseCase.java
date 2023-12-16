@@ -5,12 +5,13 @@ import jakarta.inject.Inject;
 import me.mrodriguezdev.apibiblioteca.domains.models.UserDTO;
 import me.mrodriguezdev.apibiblioteca.domains.ports.in.UserInputPort;
 import me.mrodriguezdev.apibiblioteca.domains.ports.out.UserOutputPort;
+import me.mrodriguezdev.apibiblioteca.infraestructure.exceptions.NotFoundException;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @ApplicationScoped
 public class UserUseCase implements UserInputPort {
-
     @Inject
     UserOutputPort userOutputPort;
 
@@ -20,7 +21,11 @@ public class UserUseCase implements UserInputPort {
     }
     @Override
     public UserDTO findById(Long id) {
-        return this.userOutputPort.findById(id);
+        UserDTO userDTO = this.userOutputPort.findById(id);
+
+        if(Objects.isNull(userDTO)) throw new NotFoundException("User not found");
+
+        return userDTO;
     }
     @Override
     public Optional<UserDTO> updateUser(UserDTO userDTO) {

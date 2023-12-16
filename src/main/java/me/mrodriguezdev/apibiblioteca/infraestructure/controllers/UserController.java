@@ -1,10 +1,7 @@
 package me.mrodriguezdev.apibiblioteca.infraestructure.controllers;
 
 import jakarta.inject.Inject;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import me.mrodriguezdev.apibiblioteca.domains.models.UserDTO;
@@ -22,5 +19,11 @@ public class UserController {
     public Response createUser(UserDTO userDTO) {
         this.userInputPort.createUser(userDTO);
         return Response.ok().build();
+    }
+
+    @GET
+    @Path("{id}")
+    public UserDTO findById(@PathParam("id") Long id) {
+        return this.userInputPort.findById(id);
     }
 }

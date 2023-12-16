@@ -6,6 +6,7 @@ import jakarta.transaction.Transactional;
 import me.mrodriguezdev.apibiblioteca.domains.models.UserDTO;
 import me.mrodriguezdev.apibiblioteca.domains.ports.out.UserOutputPort;
 import me.mrodriguezdev.apibiblioteca.infraestructure.entities.User;
+import me.mrodriguezdev.apibiblioteca.infraestructure.exceptions.NotFoundException;
 import me.mrodriguezdev.apibiblioteca.infraestructure.mappers.UserMapper;
 import me.mrodriguezdev.apibiblioteca.infraestructure.repositories.UserRepository;
 
@@ -29,7 +30,8 @@ public class UserAdapter implements UserOutputPort {
 
     @Override
     public UserDTO findById(Long id){
-        return null;
+        return this.userMapper.toDTO(this.userRepository.findByIdOptional(id)
+                .orElse(null));
     }
 
     @Override
