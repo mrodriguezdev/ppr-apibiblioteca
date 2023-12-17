@@ -6,4 +6,7 @@ import me.mrodriguezdev.apibiblioteca.infraestructure.entities.User;
 
 @ApplicationScoped
 public class UserRepository implements PanacheRepositoryBase<User, Long> {
+    public User findByEmail(String email) {
+        return find("correo = ?1", email).firstResult();
+    }
 }
