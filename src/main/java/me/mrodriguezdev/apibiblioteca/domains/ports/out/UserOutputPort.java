@@ -16,4 +16,6 @@ public interface UserOutputPort {
     void deleteUser(Long id);
 
     List<UserDTO> listAll();
+
+    UserDTO findByEmail(String email);
 }

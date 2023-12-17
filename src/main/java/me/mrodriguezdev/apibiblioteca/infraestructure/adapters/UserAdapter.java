@@ -79,4 +79,9 @@ public class UserAdapter implements UserOutputPort {
 
         return listUsers;
     }
+
+    @Override
+    public UserDTO findByEmail(String email) {
+        return this.userMapper.toDTO(this.userRepository.findByEmail(email));
+    }
 }
