@@ -18,12 +18,24 @@ public class UserController {
     @POST
     public Response createUser(UserDTO userDTO) {
         this.userInputPort.createUser(userDTO);
-        return Response.ok().build();
+        return Response.noContent().build();
     }
 
     @GET
     @Path("{id}")
     public UserDTO findById(@PathParam("id") Long id) {
         return this.userInputPort.findById(id);
+    }
+
+    @PUT
+    public UserDTO updateUser(UserDTO userDTO) {
+        return this.userInputPort.updateUser(userDTO);
+    }
+
+    @DELETE
+    @Path("{id}")
+    public Response deleteUser(@PathParam("id") Long id) {
+        this.userInputPort.deleteUser(id);
+        return Response.accepted().build();
     }
 }

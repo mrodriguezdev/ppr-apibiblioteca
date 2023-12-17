@@ -13,7 +13,7 @@ public class User {
     private String nombre;
     private String correo;
     private String contrasena;
-    private Integer id_rol;
+    private Integer rol;
 
     public User() {
     }
@@ -54,11 +54,11 @@ public class User {
         this.contrasena = contrasena;
     }
 
-    public Integer getId_rol() {
-        return id_rol;
+    public Integer getRol() {
+        return rol;
     }
 
-    public void setId_rol(Integer id_rol) {
-        this.id_rol = id_rol;
+    public void setRol(Integer rol) {
+        this.rol = rol;
     }
 }

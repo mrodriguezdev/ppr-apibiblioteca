@@ -4,7 +4,7 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
 
 @RegisterForReflection
 public class UserDTO {
-    private Integer id;
+    private Long id;
     private String nombre;
     private String correo;
     private String password;
@@ -13,11 +13,11 @@ public class UserDTO {
     public UserDTO() {
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
