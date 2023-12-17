@@ -7,7 +7,14 @@ como puertos y adaptadores. Para obtener más información sobre Quarkus, visita
 > [!NOTE]
 > **PPR:** Este proyecto es de carácter personal y se ha creado con el propósito de práctica y aprendizaje. La abreviatura "PPR" se refiere a "Proyecto Personal de Práctica".
 
-## Documentación de API
+## Descripción del proyecto
+El proyecto consiste en desarrollar un sistema de gestión de biblioteca que permita a los usuarios buscar, reservar y administrar libros. La información detallada de los libros se obtendrá de una API externa.
+
+## API Externa
+
+Para obtener detalles específicos sobre los libros, nuestro sistema utiliza la API externa de **Google Books APIs**. Puedes encontrar más información sobre la API [aquí](https://developers.google.com/books).
+
+## Documentación OpenAPI
 
 La documentación OpenAPI proporciona una especificación detallada de la API del proyecto. 
 
@@ -26,4 +33,5 @@ DB_PASSWORD=< Contraseña asociada al usuario de la base de datos >
 DB_HOST=< Dirección del servidor de la base de datos >
 DB_PORT=< Número de puerto en el que el servidor de la base de datos está escuchando >
 DB_NAME=< Nombre de la base de datos que la aplicación utilizará >
+GOOGLE_BOOKS_API=< URL de Google Books API >
 ```
