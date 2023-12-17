@@ -6,6 +6,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import me.mrodriguezdev.apibiblioteca.domains.models.UserDTO;
+import me.mrodriguezdev.apibiblioteca.domains.ports.out.RolOutputPort;
 import me.mrodriguezdev.apibiblioteca.domains.ports.out.UserOutputPort;
 import me.mrodriguezdev.apibiblioteca.infraestructure.entities.User;
 import me.mrodriguezdev.apibiblioteca.infraestructure.exceptions.NotFoundException;
