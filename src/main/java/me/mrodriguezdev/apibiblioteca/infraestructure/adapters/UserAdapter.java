@@ -1,6 +1,7 @@
 package me.mrodriguezdev.apibiblioteca.infraestructure.adapters;
 
 import io.quarkus.elytron.security.common.BcryptUtil;
+import io.quarkus.panache.common.Sort;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -10,6 +11,8 @@ import me.mrodriguezdev.apibiblioteca.infraestructure.entities.User;
 import me.mrodriguezdev.apibiblioteca.infraestructure.exceptions.NotFoundException;
 import me.mrodriguezdev.apibiblioteca.infraestructure.mappers.UserMapper;
 import me.mrodriguezdev.apibiblioteca.infraestructure.repositories.UserRepository;
+
+import java.util.List;
 
 @ApplicationScoped
 public class UserAdapter implements UserOutputPort {
@@ -64,5 +67,15 @@ public class UserAdapter implements UserOutputPort {
         this.userRepository.findByIdOptional(id)
                 .map(user -> this.userRepository.deleteById(id))
                 .orElseThrow(() -> new NotFoundException("User not found with ID: " + id));
+    }
+
+    @Override
+    public List<UserDTO> listAll() {
+        List<UserDTO> listUsers = this.userMapper
+                .toLstDTO(this.userRepository.listAll(Sort.ascending("id")));
+
+        if(listUsers.isEmpty()) throw new NotFoundException("No users found");
+
+        return listUsers;
     }
 }

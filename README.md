@@ -3,6 +3,7 @@
 Este proyecto, desarrollado por **mrodriguezdev**, tiene como objetivo poner en práctica conocimientos en el desarrollo de microservicios y la implementación de arquitecturas de software, específicamente la arquitectura Hexagonal, también conocida 
 como puertos y adaptadores. Para obtener más información sobre Quarkus, visita [quarkus.io](https://quarkus.io/).
 
+
 > [!NOTE]
 > **PPR:** Este proyecto es de carácter personal y se ha creado con el propósito de práctica y aprendizaje. La abreviatura "PPR" se refiere a "Proyecto Personal de Práctica".
 

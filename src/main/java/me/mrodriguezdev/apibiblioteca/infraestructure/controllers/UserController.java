@@ -7,6 +7,8 @@ import jakarta.ws.rs.core.Response;
 import me.mrodriguezdev.apibiblioteca.domains.models.UserDTO;
 import me.mrodriguezdev.apibiblioteca.domains.ports.in.UserInputPort;
 
+import java.util.List;
+
 @Path("user")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -37,5 +39,11 @@ public class UserController {
     public Response deleteUser(@PathParam("id") Long id) {
         this.userInputPort.deleteUser(id);
         return Response.accepted().build();
+    }
+
+    @GET
+    @Path("all")
+    public List<UserDTO> getAllUsers() {
+        return this.userInputPort.getAllUsers();
     }
 }
