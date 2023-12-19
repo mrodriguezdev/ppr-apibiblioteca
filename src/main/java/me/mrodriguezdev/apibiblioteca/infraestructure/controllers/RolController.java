@@ -1,5 +1,6 @@
 package me.mrodriguezdev.apibiblioteca.infraestructure.controllers;
 
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -9,6 +10,7 @@ import me.mrodriguezdev.apibiblioteca.domains.ports.in.RolInputPort;
 @Path("rol")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
+@RolesAllowed("admin")
 public class RolController {
 
     @Inject

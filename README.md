@@ -34,4 +34,7 @@ DB_HOST=< Dirección del servidor de la base de datos >
 DB_PORT=< Número de puerto en el que el servidor de la base de datos está escuchando >
 DB_NAME=< Nombre de la base de datos que la aplicación utilizará >
 GOOGLE_BOOKS_API=< URL de Google Books API >
+ISSUER=< Identificador único de la entidad emisora del token JWT >
+HOST_PUBLIC_KEY=< Dirección del servidor de la clave pública para verificar tokens JWT >
+HOST_PRIVATE_KEY= < Dirección del servidor de la clave privada para firmar tokens JWT >
 ```
