@@ -38,3 +38,17 @@ ISSUER=< Identificador único de la entidad emisora del token JWT >
 HOST_PUBLIC_KEY=< Dirección del servidor de la clave pública para verificar tokens JWT >
 HOST_PRIVATE_KEY= < Dirección del servidor de la clave privada para firmar tokens JWT >
 ```
+
+## Script de la Base de Datos
+
+El script de la base de datos necesario para la configuración inicial del sistema se encuentra en el siguiente repositorio:
+
+[Enlace al Script de la Base de Datos](https://github.com/mrodriguezdev/ppr-apibiblioteca-db-script)
+
+Este script incluye la estructura de la base de datos y, en algunos casos, datos de ejemplo. Puedes utilizar este script para inicializar la base de datos del sistema.
+
+**Instrucciones:**
+1. Clona el repositorio en tu máquina local.
+2. Ejecuta el script en tu servidor de base de datos para crear la estructura inicial y, si es necesario, cargar datos de ejemplo.
+
+Ten en cuenta que este script está diseñado para funcionar con las variables de entorno definidas en este proyecto. Asegúrate de configurar las variables de entorno adecuadamente antes de ejecutar el script.
