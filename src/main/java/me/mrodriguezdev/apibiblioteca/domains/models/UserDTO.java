@@ -1,12 +1,16 @@
 package me.mrodriguezdev.apibiblioteca.domains.models;
 
 import io.quarkus.runtime.annotations.RegisterForReflection;
+import io.smallrye.common.constraint.NotNull;
 
 @RegisterForReflection
 public class UserDTO {
     private Long id;
+    @NotNull
     private String nombre;
+    @NotNull
     private String correo;
+    @NotNull
     private String password;
     private Integer rol;
 

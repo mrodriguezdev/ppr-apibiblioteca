@@ -3,7 +3,7 @@ package me.mrodriguezdev.apibiblioteca.infraestructure.adapters;
 import io.smallrye.jwt.build.Jwt;
 import jakarta.enterprise.context.ApplicationScoped;
 import me.mrodriguezdev.apibiblioteca.domains.models.AuthResponseDTO;
-import me.mrodriguezdev.apibiblioteca.domains.ports.out.JwtOutputPort;
+import me.mrodriguezdev.apibiblioteca.domains.ports.out.JwtUtilOutputPort;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.jwt.Claims;
 
@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Set;
 
 @ApplicationScoped
-public class JwtAdapter implements JwtOutputPort {
+public class JwtUtilAdapter implements JwtUtilOutputPort {
     @ConfigProperty(name = "mp.jwt.verify.issuer")
     private String issuer;
 

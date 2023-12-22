@@ -1,5 +1,7 @@
 package me.mrodriguezdev.apibiblioteca.infraestructure.controllers;
 
+import io.quarkus.security.Authenticated;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -23,27 +25,47 @@ public class UserController {
         return Response.noContent().build();
     }
 
+    @POST
+    @Path("personal")
+    @RolesAllowed("admin")
+    public Response createPersonal(UserDTO userDTO) {
+        this.userInputPort.createPersonal(userDTO);
+        return Response.noContent().build();
+    }
+
+    @POST
+    @Path("admin")
+    @RolesAllowed("admin")
+    public Response createAdmin(UserDTO userDTO) {
+        this.userInputPort.createAdmin(userDTO);
+        return Response.noContent().build();
+    }
+
+    @GET
+    @Path("list")
+    @RolesAllowed("admin")
+    public List<UserDTO> listAll() {
+        return this.userInputPort.listAll();
+    }
+
     @GET
     @Path("{id}")
+    @RolesAllowed("admin")
     public UserDTO findById(@PathParam("id") Long id) {
         return this.userInputPort.findById(id);
     }
 
     @PUT
-    public UserDTO updateUser(UserDTO userDTO) {
-        return this.userInputPort.updateUser(userDTO);
+    @Authenticated
+    public UserDTO update(UserDTO userDTO) {
+        return this.userInputPort.update(userDTO);
     }
 
     @DELETE
     @Path("{id}")
-    public Response deleteUser(@PathParam("id") Long id) {
-        this.userInputPort.deleteUser(id);
+    @RolesAllowed("admin")
+    public Response delete(@PathParam("id") Long id) {
+        this.userInputPort.delete(id);
         return Response.accepted().build();
-    }
-
-    @GET
-    @Path("all")
-    public List<UserDTO> getAllUsers() {
-        return this.userInputPort.getAllUsers();
     }
 }

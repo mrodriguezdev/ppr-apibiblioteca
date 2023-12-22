@@ -1,16 +1,12 @@
 package me.mrodriguezdev.apibiblioteca.infraestructure.adapters;
 
-import io.quarkus.elytron.security.common.BcryptUtil;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import me.mrodriguezdev.apibiblioteca.domains.models.AuthResponseDTO;
 import me.mrodriguezdev.apibiblioteca.domains.models.LoginDTO;
 import me.mrodriguezdev.apibiblioteca.domains.models.RolDTO;
 import me.mrodriguezdev.apibiblioteca.domains.models.UserDTO;
-import me.mrodriguezdev.apibiblioteca.domains.ports.out.AuthOutputPort;
-import me.mrodriguezdev.apibiblioteca.domains.ports.out.JwtOutputPort;
-import me.mrodriguezdev.apibiblioteca.domains.ports.out.RolOutputPort;
-import me.mrodriguezdev.apibiblioteca.domains.ports.out.UserOutputPort;
+import me.mrodriguezdev.apibiblioteca.domains.ports.out.*;
 import me.mrodriguezdev.apibiblioteca.infraestructure.exceptions.BadRequestException;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
@@ -29,12 +25,14 @@ public class AuthAdapter implements AuthOutputPort {
     RolOutputPort rolOutputPort;
 
     @Inject
-    JwtOutputPort jwtOutputPort;
+    JwtUtilOutputPort jwtUtilOutputPort;
+
+    @Inject
+    BcryptUtilOutputPort bcryptUtilOutputPort;
 
     @Override
     public AuthResponseDTO login(LoginDTO loginDTO) {
         UserDTO userDTO = this.userOutputPort.findByEmail(loginDTO.getEmail());
-
         if(Objects.isNull(userDTO)) throw new BadRequestException("User not found");
 
         this.validatePassword(userDTO, loginDTO.getPassword());
@@ -43,7 +41,7 @@ public class AuthAdapter implements AuthOutputPort {
     }
 
     private void validatePassword(UserDTO userDTO, String password) {
-        if(!BcryptUtil.matches(password, userDTO.getPassword())) throw new BadRequestException("Invalid username or password. Please check your credentials and try again");
+        if(!this.bcryptUtilOutputPort.bcryptCheck(password, userDTO.getPassword())) throw new BadRequestException("Invalid username or password. Please check your credentials and try again");
     }
 
     private AuthResponseDTO createResponseLogin(UserDTO userDTO) {
@@ -54,7 +52,7 @@ public class AuthAdapter implements AuthOutputPort {
     }
 
     private String generateToken(AuthResponseDTO.Data data) {
-        return this.jwtOutputPort.generateToken(data);
+        return this.jwtUtilOutputPort.generateToken(data);
     }
 
     private RolDTO findRolById(Integer id) {

@@ -5,6 +5,6 @@ import me.mrodriguezdev.apibiblioteca.domains.models.AuthResponseDTO;
 
 
 @ApplicationScoped
-public interface JwtOutputPort {
+public interface JwtUtilOutputPort {
     String generateToken(AuthResponseDTO.Data data);
 }
