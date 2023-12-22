@@ -57,13 +57,14 @@ public class UserController {
     }
 
     @PUT
+    @Path("update")
     @Authenticated
     public UserDTO update(UserDTO userDTO) {
         return this.userInputPort.update(userDTO);
     }
 
     @DELETE
-    @Path("{id}")
+    @Path("delete/{id}")
     @RolesAllowed("admin")
     public Response delete(@PathParam("id") Long id) {
         this.userInputPort.delete(id);

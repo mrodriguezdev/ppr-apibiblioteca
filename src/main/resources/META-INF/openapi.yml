@@ -1,0 +1,462 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Sistema Bibliotecario API
+  description: >
+    API diseñada para facilitar la gestión de un sistema bibliotecario. Proporciona
+    operaciones para la administración de libros, usuarios, préstamos y más.
+  contact:
+    name: mrodriguezdev
+    email: mrodriguezdev.me@gmail.com
+    url: https://mrodriguezdev.me
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  servers:
+    - url: http://localhost:8080
+tags:
+  - name: auth
+    description: Operaciones de autenticación
+  - name: user
+    description: Operaciones relacionadas con usuarios
+  - name: booking
+    description: Operaciones de reserva de libros
+  - name: lending
+    description: Operaciones de préstamo de libros
+paths:
+  /auth:
+    post:
+      summary: Realizar inicio de sesión
+      description: Autenticar al usuario con las credenciales proporcionadas.
+      operationId: authUser
+      tags:
+        - auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginDTO'
+      responses:
+        '200':
+          description: Inicio de sesión exitoso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponseDTO'
+        '401':
+          description: Credenciales inválidas
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomExceptionResponse'
+        '404':
+          description: Usuario no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomExceptionResponse'
+        '500':
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomExceptionResponse'
+
+  /user/register:
+    post:
+      summary: Crear usuario
+      description: Crear un nuevo usuario.
+      operationId: createUser
+      tags:
+        - user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDTO'
+      responses:
+        '204':
+          description: Usuario creado exitosamente
+        '500':
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomExceptionResponse'
+
+  /user/personal:
+    post:
+      summary: Crear usuario personal
+      description: Crear un nuevo usuario con rol 'personal'. Se requiere el rol de 'admin'.
+      operationId: createPersonal
+      tags:
+        - user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDTO'
+      security:
+        - bearerAuth: [ ]
+      responses:
+        '204':
+          description: Usuario creado exitosamente
+        '403':
+          description: Acceso prohibido
+        '500':
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomExceptionResponse'
+
+  /user/admin:
+    post:
+      summary: Crear usuario admin
+      description: Crear un nuevo usuario con rol 'admin'. Se requiere el rol de 'admin'.
+      operationId: createAdmin
+      tags:
+        - user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDTO'
+      security:
+        - bearerAuth: [ ]
+      responses:
+        '204':
+          description: Usuario creado exitosamente
+        '403':
+          description: Acceso prohibido
+        '500':
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomExceptionResponse'
+
+  /user/list:
+    get:
+      summary: Listar todos los usuarios
+      description: Obtener una lista de todos los usuarios. Se requiere el rol de 'admin'.
+      operationId: listAll
+      tags:
+        - user
+      security:
+        - bearerAuth: [ ]
+      responses:
+        '200':
+          description: Lista de usuarios
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserDTO'
+        '403':
+          description: Acceso prohibido
+        '404':
+          description: Usuarios no encontrados
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomExceptionResponse'
+        '500':
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomExceptionResponse'
+
+  /user/{id}:
+    get:
+      summary: Obtener usuario por ID
+      description: Obtener un usuario por su ID. Se requiere el rol de 'admin'.
+      operationId: findById
+      tags:
+        - user
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      security:
+        - bearerAuth: [ ]
+      responses:
+        '200':
+          description: Usuario encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDTO'
+        '403':
+          description: Acceso prohibido
+        '404':
+          description: Usuario no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomExceptionResponse'
+        '500':
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomExceptionResponse'
+
+  /user/update:
+    put:
+      summary: Actualizar usuario
+      description: Actualizar la información de un usuario. Se requiere autenticación.
+      operationId: update
+      tags:
+        - user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDTO'
+      security:
+        - bearerAuth: [ ]
+      responses:
+        '200':
+          description: Usuario actualizado exitosamente
+        '401':
+          description: No autorizado
+        '404':
+          description: Usuario no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomExceptionResponse'
+        '500':
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomExceptionResponse'
+
+  /user/delete/{id}:
+    delete:
+      summary: Eliminar usuario por ID
+      description: Eliminar un usuario por su ID. Se requiere el rol de 'admin'.
+      operationId: delete
+      tags:
+        - user
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      security:
+        - bearerAuth: [ ]
+      responses:
+        '202':
+          description: Usuario eliminado exitosamente
+        '403':
+          description: Acceso prohibido
+        '404':
+          description: Usuario no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomExceptionResponse'
+        '500':
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomExceptionResponse'
+
+  /booking:
+    post:
+      summary: Reservar un libro
+      description: Permite a un usuario reservar un libro.
+      operationId: reserveBook
+      tags:
+        - booking
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookingDTO'
+      responses:
+        '200':
+          description: Reserva realizada con éxito
+        '401':
+          description: No autorizado
+        '404':
+          description: Usuario no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomExceptionResponse'
+        '500':
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomExceptionResponse'
+
+  /lending:
+    post:
+      summary: Crear un nuevo préstamo
+      description: Permite crear un nuevo préstamo de libro.
+      operationId: createLending
+      tags:
+        - lending
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LendingDTO'
+      responses:
+        '200':
+          description: Préstamo creado con éxito
+        '401':
+          description: No autorizado
+        '500':
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomExceptionResponse'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    CustomExceptionResponse:
+      type: object
+      properties:
+        content:
+          type: object
+          description: Contenido específico del error
+        description:
+          type: string
+          description: Descripción detallada del error
+        error:
+          type: string
+          description: Tipo o nombre del error
+        status:
+          type: integer
+          format: int32
+          description: Código de estado HTTP
+    AuthResponseDTO:
+      type: object
+      properties:
+        token:
+          type: string
+          description: Token de autenticación
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+        data:
+          $ref: "#/components/schemas/Data"
+    Data:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: ID del usuario
+          example: 123
+        email:
+          type: string
+          format: email
+          description: Correo electrónico del usuario
+          example: "usuario@usuario.com"
+        nombre:
+          type: string
+          description: Nombre del usuario
+          example: "John Doe"
+        rol:
+          type: string
+          description: Rol del usuario
+          example: "admin"
+    LoginDTO:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+    UserDTO:
+      type: object
+      required:
+        - nombre
+        - correo
+        - password
+      properties:
+        id:
+          type: integer
+          format: int64
+        nombre:
+          type: string
+          minLength: 1
+        correo:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 1
+        rol:
+          type: integer
+          format: int32
+    BookingDTO:
+      type: object
+      required:
+        - usuario
+        - isbn
+        - fecha
+      properties:
+        usuario:
+          type: integer
+          description: ID del usuario que realiza la reserva
+        isbn:
+          type: string
+          description: ISBN del libro que se está reservando
+        fecha:
+          type: string
+          format: date-time
+          description: Fecha y hora de la reserva
+    LendingDTO:
+      type: object
+      required:
+        - usuario
+        - isbn
+        - fecha_prestamo
+        - fecha_devolucion
+      properties:
+        usuario:
+          type: integer
+          description: ID del usuario que realiza el préstamo
+        isbn:
+          type: string
+          description: ISBN del libro que se está prestando
+        fecha_prestamo:
+          type: string
+          format: date-time
+          description: Fecha y hora del préstamo
+        fecha_devolucion:
+          type: string
+          format: date-time
+          description: Fecha y hora de la devolución del préstamo
+
+
