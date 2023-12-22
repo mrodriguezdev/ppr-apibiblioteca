@@ -46,7 +46,7 @@ public class AuthAdapter implements AuthOutputPort {
 
     private AuthResponseDTO createResponseLogin(UserDTO userDTO) {
         RolDTO rol = this.findRolById(userDTO.getRol());
-        AuthResponseDTO.Data data = new AuthResponseDTO.Data(userDTO.getCorreo(), userDTO.getNombre(), rol.getDescripcion());
+        AuthResponseDTO.Data data = new AuthResponseDTO.Data(userDTO.getId(), userDTO.getCorreo(), userDTO.getNombre(), rol.getDescripcion());
         String jwt = this.generateToken(data);
         return new AuthResponseDTO(jwt, data);
     }

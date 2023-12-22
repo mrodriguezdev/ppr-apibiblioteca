@@ -20,6 +20,7 @@ public class UserController {
     UserInputPort userInputPort;
 
     @POST
+    @Path("register")
     public Response createUser(UserDTO userDTO) {
         this.userInputPort.createUser(userDTO);
         return Response.noContent().build();
