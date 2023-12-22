@@ -47,9 +47,9 @@ public class UserAdapter implements UserOutputPort {
 
     @Override
     public UserDTO findById(Long id) {
-        return this.userMapper
-                .toDTO(this.userRepository.findByIdOptional(id)
-                        .orElseThrow(() -> new NotFoundException("User not found with ID: " + id)));
+        return this.userRepository.findByIdOptional(id)
+                .map(userMapper::toDTO)
+                .orElseThrow(() -> new NotFoundException("User not found with ID: " + id));
     }
 
     @Override

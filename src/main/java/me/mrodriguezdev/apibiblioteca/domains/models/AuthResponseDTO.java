@@ -21,6 +21,7 @@ public class AuthResponseDTO {
     }
 
     public static class Data {
+        private Long id;
         private String email;
         private String nombre;
         private String rol;
@@ -28,10 +29,19 @@ public class AuthResponseDTO {
         public Data() {
         }
 
-        public Data(String email, String nombre, String rol) {
+        public Data(Long id, String email, String nombre, String rol) {
+            this.id = id;
             this.email = email;
             this.nombre = nombre;
             this.rol = rol;
+        }
+
+        public Long getId() {
+            return id;
+        }
+
+        public void setId(Long id) {
+            this.id = id;
         }
 
         public String getEmail() {
