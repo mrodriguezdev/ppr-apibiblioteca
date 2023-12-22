@@ -1,5 +1,6 @@
 package me.mrodriguezdev.apibiblioteca.infraestructure.controllers;
 
+import io.quarkus.security.Authenticated;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
@@ -13,6 +14,7 @@ import me.mrodriguezdev.apibiblioteca.domains.ports.in.BookinInputPort;
 @Path("booking")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
+@Authenticated
 public class BookingController {
 
     @Inject
