@@ -9,11 +9,15 @@ import java.util.List;
 public interface UserInputPort {
     void createUser(UserDTO userDTO);
 
+    void createPersonal(UserDTO userDTO);
+
+    void createAdmin(UserDTO userDTO);
+
+    List<UserDTO> listAll();
+
     UserDTO findById(Long id);
 
-    UserDTO updateUser(UserDTO userDTO);
+    UserDTO update(UserDTO userDTO);
 
-    void deleteUser(Long id);
-
-    List<UserDTO> getAllUsers();
+    void delete(Long id);
 }

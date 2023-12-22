@@ -7,15 +7,15 @@ import java.util.List;
 
 @ApplicationScoped
 public interface UserOutputPort {
-    void createUser(UserDTO userDTO);
-
-    UserDTO findById(Long id);
-
-    UserDTO updateUser(UserDTO userDTO);
-
-    void deleteUser(Long id);
+    void create(UserDTO userDTO);
 
     List<UserDTO> listAll();
 
     UserDTO findByEmail(String email);
+
+    UserDTO findById(Long id);
+
+    UserDTO update(UserDTO userDTO);
+
+    void delete(Long id);
 }
